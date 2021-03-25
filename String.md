@@ -17,6 +17,7 @@
 <p align="center">
         <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/002.jpg" width="500"/>
 </p>
+
 - `String s1 = "javaEE";` 语句执行时，直接在方法区中的**字符串常量池**开辟空间存储 "javaEE"
 
 - `String s2 = new String("javaEE");` 语句执行时，先在堆中创建一个新的 String 对象，新 String 对象的 final 
@@ -32,6 +33,7 @@
 <p align="center">
         <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/003.jpg" width="500"/>
 </p>
+
 - 即若执行 `s1 = "hello";` 语句，不会改变字符串常量池中原 "abc" 的值，而是重新在字符串常量池开辟新空间存储 "hello"
 
   ------
@@ -41,6 +43,7 @@
 <p align="center">
         <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/004.jpg" width="500"/>
 </p>
+
 - `s1 = "hello";` 与 `s3 = "hello" + "word";` 都直接在字符串常量池中赋值
 
 - `s4 = s1 + "world";` 等只要赋值语句中涉及 String 变量，都会在堆中创建新对象
