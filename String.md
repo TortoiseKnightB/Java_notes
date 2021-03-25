@@ -10,15 +10,29 @@
 
 - 发现 String 内部定义了final char[] value 用于存储字符串数据
 
-- 此外 String 字符序列具有不可变性
 
-  ```
-  
-  ```
+&ensp;&ensp;&ensp;&ensp;参考尚硅谷关于  String 的讲解（一）
+<p align="center">
+        <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/2.jpg" width="500"/>
+</p>
+- String s1 = "javaEE"; 语句执行时，直接在方法区中的字符串常量池开辟空间存储 "javaEE"
 
-  ![IMG_5142](/Users/liuyang/Desktop/IMG_5142.PNG)
+- String s2 = new String("javaEE"); 语句执行时，先在堆中创建一个新的 String 对象，新 String 对象的 final 
 
-![IMG_5135](/Users/liuyang/Desktop/IMG_5135.PNG)
+  char[] 类型常量 value 指向字符串常量池中的 "javaEE"
+
+- 字符串常量区中相同的字符数组只会存在一个
+
+- 此外 String 字符序列具有不可变性，即若 执行 s1 = "new javaEE"; 语句，不会改变字符串常量池中原 "javaEE" 的值，而是重新在字符串常量池开辟新空间存储 "new javaEE"
+
+&ensp;&ensp;&ensp;&ensp;参考尚硅谷关于  String 的讲解（二）
+
+<p align="center">
+        <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/3.jpg" width="500"/>
+</p>
+
+
+
 
 ```java
 public class Solution {
