@@ -82,10 +82,17 @@ public class Solution {
 
 - 正常情况下，修改引用类型变量的值会使内存变量的值改变。**但是由于 String 的不可变性，修改 str2 的值会重新开辟新的内存空间存放 “test”，s.str 的值会不改变**
 
-  ![截屏2021-03-24 下午11.37.37](/Users/liuyang/Desktop/截屏2021-03-24 下午11.37.37.png)
+<p align="center">
+        <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/005.png" width="500"/>
+</p>
 
-- 修改 str2 前，可以看见 str 和 str2 指向相同的地址 @494
+- 修改 str2 前，可以看见 str 和 str2 指向相同的地址 char[4]@494
 
-  ![截屏2021-03-24 下午11.37.57](/Users/liuyang/Desktop/截屏2021-03-24 下午11.37.57.png)
+<p align="center">
+        <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/006.png" width="500"/>
+</p>
 
 - 修改 str2 后，str2 指向新的地址 @496。而 str 并不受影响
+
+  ------
+
