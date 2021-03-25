@@ -1,6 +1,6 @@
 # String笔记
 
-##### String 内存原理
+### String 内存原理
 
 &ensp;&ensp;&ensp;&ensp;查看 String 源码
 
@@ -8,7 +8,7 @@
         <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/001.png" width="500"/>
 </p>
 
-- 发现 String 内部定义了`final char[] value `用于存储字符串数据
+- 发现 String 内部定义了`final char[] value` 用于存储字符串数据
 
   ------
 
@@ -32,7 +32,7 @@
 <p align="center">
         <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/003.jpg" width="500"/>
 </p>
-- 即若执行 `s1 = "hello"; `语句，不会改变字符串常量池中原 "abc" 的值，而是重新在字符串常量池开辟新空间存储 "hello"
+- 即若执行 `s1 = "hello";` 语句，不会改变字符串常量池中原 "abc" 的值，而是重新在字符串常量池开辟新空间存储 "hello"
 
   ------
 
@@ -41,11 +41,11 @@
 <p align="center">
         <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/004.jpg" width="500"/>
 </p>
-- `s1 = "hello";` 与 `s3 = "hello" + "word"; `都直接在字符串常量池中赋值
+- `s1 = "hello";` 与 `s3 = "hello" + "word";` 都直接在字符串常量池中赋值
 
-- `s4 = s1 + "world";`等只要赋值语句中涉及 String 变量，都会在堆中创建新对象
+- `s4 = s1 + "world";` 等只要赋值语句中涉及 String 变量，都会在堆中创建新对象
 
-- `(s1 + s2).intern()`将堆空间的对象转化为字符串常量池中的对象
+- `(s1 + s2).intern()` 将堆空间的对象转化为字符串常量池中的对象
 
   ------
 
