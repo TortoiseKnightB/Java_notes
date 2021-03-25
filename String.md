@@ -2,9 +2,15 @@
 
 ##### String 内存原理
 
-- String 内部定义了final char[] value 用于存储字符串数据
+&ensp;&ensp;&ensp;&ensp;查看 String 源码
 
-- String 字符序列的不可变性
+<p align="center">
+        <img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String/1.png" width="500"/>
+</p>
+
+- 发现 String 内部定义了final char[] value 用于存储字符串数据
+
+- 此外 String 字符序列具有不可变性
 
   ```
   
