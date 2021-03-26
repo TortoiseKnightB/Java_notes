@@ -97,3 +97,18 @@
 
 ### StringBuffer 类的常用方法
 
+<p aline="center">
+	<img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String等常见用法/03.png" width="600" />
+</p>
+
+- `public int indexOf(String str)`：返回 str 第一次出现的位置
+- `public String substring(int start)`：截取从指定位置开始往后的子字符串
+- `public String substring(int start, int end)`：截取 `[start, end)` 区间的字符串
+- `public int length()`：返回长度
+- `public char charAt(int n)`：返回指定位置的字符
+- `public void setCharAt(int n, char ch)`：替换指定位置的字符
+
+### StringBuilder 类的常用方法
+
+- （同 StringBuffer 类）
+
