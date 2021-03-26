@@ -1,6 +1,6 @@
 # String等常用方法
 
-### String类的常用方法
+### String 类的常用方法
 
 &ensp;&ensp;&ensp;&ensp;注意：由于 String 的字符序列**不可变性**，需要用新的 String 类对象来接收返回值，如`String s2 = s1.toLowerCase`
 
@@ -36,7 +36,64 @@
 
 - `boolean startsWith(String prefix, int offset)`：从字符串指定位置开始，判断是否以指定前缀开始
 
+<p aline="center">
+	<img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String等常见用法/01.jpg" width="600" />
+</p>
+
 ------
 
+<p aline="center">
+	<img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String等常见用法/02.jpg" width="600" />
+</p>
+-------
 
+### String类与其他类型的转换
+
+- 与**基本数据类型**的转换
+
+&ensp;&ensp;&ensp;&ensp;`int i = Integer.parseInt(str);`
+
+&ensp;&ensp;&ensp;&ensp;`String str = String.valueOf(i);`
+
+- 与**字符数组**的转换
+
+```java
+        char[] chars = {'a', 'b', 'c', 'd', 'e'};
+        String s1 = new String(chars);
+        System.out.println(s1);     // abcde
+        String s2 = new String(chars, 2, 2);
+        System.out.println(s2);     // cd
+```
+```java
+        String s3 = "ABCDEFG";
+        char[] chars1 = s3.toCharArray();
+        System.out.println(chars1);     // ABCDEFG
+        s3.getChars(3,5,chars1,1);			// 将字符串 s3 的第 3、4 位拷贝到数组 chars1 的第 1、2 位上
+        System.out.println(chars1);     // ADEDEFG
+```
+
+- 与**字节数组**的转换
+
+```java
+ 				String s3 = "ABC";
+        byte[] bytes = s3.getBytes();
+//	  	bytes = s3.getBytes(StandardCharsets.UTF_8); 	// 使用指定的字符集
+        System.out.println(bytes[0]);   // 65
+        System.out.println(bytes[1]);   // 66
+        System.out.println(bytes[2]);   // 67
+        System.out.println(Arrays.toString(bytes));     // [65, 66, 67]
+```
+
+
+```java
+				byte[] bytes = {97, 98, 99, 100, 101};
+        String s = new String(bytes);
+        System.out.println(s);     // abcde
+        s = new String(bytes,1,3);  // 输出字节数组 bytes 从下标 1 开始的 3 个字节
+        System.out.println(s);      // bcd
+```
+
+------
+
+### StringBuffer 类的常用方法
 
