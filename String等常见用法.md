@@ -36,13 +36,13 @@
 
 - `boolean startsWith(String prefix, int offset)`：从字符串指定位置开始，判断是否以指定前缀开始
 
-<p aline="center">
+<p align="center">
 	<img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String等常见用法/01.jpg" width="600" />
 </p>
 
 ------
 
-<p aline="center">
+<p align="center">
 	<img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String等常见用法/02.jpg" width="600" />
 </p>
 -------
@@ -97,7 +97,7 @@
 
 ### StringBuffer 类的常用方法
 
-<p aline="center">
+<p align="center">
 	<img src="https://raw.githubusercontent.com/TortoiseKnightB/Java_notes/main/images/String等常见用法/03.png" width="600" />
 </p>
 
