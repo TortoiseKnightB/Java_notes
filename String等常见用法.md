@@ -1,4 +1,4 @@
-# String等常用方法
+# String 等常用方法
 
 ### String 类的常用方法
 
@@ -92,6 +92,16 @@
         System.out.println(s);     // abcde
         s = new String(bytes,1,3);  // 输出字节数组 bytes 从下标 1 开始的 3 个字节
         System.out.println(s);      // bcd
+```
+
+- 与**StringBuffer**类的转换
+
+```java
+String c = stringBuffer.toString();
+```
+
+```java
+StringBuffer buffer = new StringBuffer(str);
 ```
 
 ------
