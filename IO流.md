@@ -193,6 +193,5 @@
 - 输出操作，对应的 File 可以不存在的，并不会报异常
 - File 对应的硬盘中的文件如果不存在，在输出的过程中，会自动创建此文件
 - File 对应的硬盘中的文件如果存在：
-- - 如果流使用的构造器是：`FileWriter(file,false) / FileWriter(file)`: 对原有文件的覆盖
-- - 如果流使用的构造器是：`FileWriter(file,true)`: 不会对原有文件覆盖，而是在原有文件基础上追加内容
-
+  - 如果流使用的构造器是：`FileWriter(file,false) / FileWriter(file)`: 对原有文件的覆盖
+  - 如果流使用的构造器是：`FileWriter(file,true)`: 不会对原有文件覆盖，而是在原有文件基础上追加内容
