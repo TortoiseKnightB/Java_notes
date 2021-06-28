@@ -59,7 +59,9 @@
 
 ------
 
-### IO 流的分类
+### IO 
+
+##### IO 流的分类
 
 - 操作数据单位：字节流、字符流
 - 数据的流向：输入流、输出流
@@ -69,7 +71,7 @@
 <img src="https://github.com/TortoiseKnightB/Java_notes/blob/main/images/IO流/001.jpg?raw=true" width=500/>
 </p>
 
-### IO 流的体系结构
+##### IO 流的体系结构
 
 |抽象基类|节点流（或文件流）|缓冲流（处理流的一种）|
 |:----:|:----|:----|
@@ -81,3 +83,73 @@
 <p align="center">
 <img src="https://github.com/TortoiseKnightB/Java_notes/blob/main/images/IO流/002.jpg?raw=true" width=500/>
 </p>
+
+### 节点流（文件流）
+
+##### FileReader
+
+将 module 中的 hello.txt 文件内容读入程序中，并输出到控制台
+
+- File 类的实例化
+- FileReader 流的实例化
+- 读入的操作
+- 资源的关闭
+
+```java
+		@Test
+    public void testFileReader()  {
+        FileReader fr = null;
+        try {
+            //1.File类的实例化
+            File file = new File("hello.txt");
+
+            //2.FileReader流的实例化
+            fr = new FileReader(file);
+
+            //3.读入的操作
+            //read(char[] cbuf):返回每次读入cbuf数组中的字符的个数。如果达到文件末尾，返回-1
+            char[] cbuf = new char[5];
+            int len;
+            while((len = fr.read(cbuf)) != -1){
+                //方式一：
+                //错误的写法
+//                for(int i = 0;i < cbuf.length;i++){
+//                    System.out.print(cbuf[i]);
+//                }
+                //正确的写法
+//                for(int i = 0;i < len;i++){
+//                    System.out.print(cbuf[i]);
+//                }
+              
+                //方式二：
+                //错误的写法,对应着方式一的错误的写法
+//                String str = new String(cbuf);
+//                System.out.print(str);
+                //正确的写法
+                String str = new String(cbuf,0,len);
+                System.out.print(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fr != null){
+                //4.资源的关闭
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+```
+
+##### FileWriter
+
+从内存中写出数据到硬盘的文件里
+
+- a
+
+```java
+
+```
