@@ -56,3 +56,28 @@
 - `public boolean mkdir()`：创建文件目录。如果此文件目录存在，就不创建。如果此文件目录的上层目录不存在，也不创建
 - `public boolean mkdirs()`：创建文件目录。如果此文件目录存在，就不创建。如果上层文件目录不存在，一并创建
 - `public boolean delete()`：删除文件或者文件夹。要想删除成功，文件目录下不能有子目录或文件
+
+------
+
+### IO 流的分类
+
+- 操作数据单位：字节流、字符流
+- 数据的流向：输入流、输出流
+- 流的角色：节点流、处理流
+
+<p align="center">
+<img src="https://github.com/TortoiseKnightB/Java_notes/blob/main/images/IO流/001.jpg?raw=true" width=500/>
+</p>
+
+### IO 流的体系结构
+
+|抽象基类|节点流（或文件流）|缓冲流（处理流的一种）|
+|:----:|:----|:----|
+|InputStream|`FileInputStream   (read(byte[] buffer))`|`BufferedInputStream (read(byte[] buffer))`|
+|OutputStream|`FileOutputStream  (write(byte[] buffer,0,len)`|`BufferedOutputStream (write(byte[] buffer,0,len) / flush()`|
+|Reader|`FileReader (read(char[] cbuf))`|`BufferedReader (read(char[] cbuf) / readLine())`|
+|Writer|`FileWriter (write(char[] cbuf,0,len)`|`BufferedWriter (write(char[] cbuf,0,len) / flush()`|
+
+<p align="center">
+<img src="https://github.com/TortoiseKnightB/Java_notes/blob/main/images/IO流/002.jpg?raw=true" width=500/>
+</p>
