@@ -92,6 +92,11 @@
 
 ### 节点流（文件流）
 
+- 不能使用字符流来处理图片等字节数据
+- 使用字节流 FileInputStream 处理文本文件，可能出现乱码(如果只进行文件的复制，不进行读操作，则没有影响)
+- 对于**文本文件**(.txt,.java,.c,.cpp)，使用**字符流**处理
+- 对于**非文本文件**(.jpg,.mp3,.mp4,.avi,.doc,.ppt,...)，使用**字节流**处理
+
 ##### FileReader
 
 将 module 中的 hello.txt 文件内容读入程序中，并输出到控制台
@@ -114,6 +119,7 @@
 
             //3.读入的操作
             //read(char[] cbuf):返回每次读入cbuf数组中的字符的个数。如果达到文件末尾，返回-1
+          	// read():读取一个字符，返回ASCII码，末尾返回-1
             char[] cbuf = new char[5];
             int len;
             while((len = fr.read(cbuf)) != -1){
@@ -195,3 +201,225 @@
 - File 对应的硬盘中的文件如果存在：
   - 如果流使用的构造器是：`FileWriter(file,false) / FileWriter(file)`: 对原有文件的覆盖
   - 如果流使用的构造器是：`FileWriter(file,true)`: 不会对原有文件覆盖，而是在原有文件基础上追加内容
+
+```java
+		// 输入+输出	
+		@Test
+    public void testFileReaderFileWriter() {
+        FileReader fr = null;
+        FileWriter fw = null;
+        try {
+            //1.创建File类的对象，指明读入和写出的文件
+            File srcFile = new File("hello.txt");
+            File destFile = new File("hello2.txt");
+
+            //2.创建输入流和输出流的对象
+            fr = new FileReader(srcFile);
+            fw = new FileWriter(destFile);
+
+            //3.数据的读入和写出操作
+            char[] cbuf = new char[5];
+            int len;//记录每次读入到cbuf数组中的字符的个数
+            while((len = fr.read(cbuf)) != -1){
+                //每次写出len个字符
+                fw.write(cbuf,0,len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.关闭流资源
+            try {
+                if(fw != null)
+                    fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if(fr != null)
+                    fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+```
+
+##### FileInputStream & FileOutputStream
+
+字节流拷贝图片
+
+```java
+ 		@Test
+    public void testFileInputOutputStream() {
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            File srcFile = new File("爱情与友情.jpg");
+            File destFile = new File("爱情与友情2.jpg");
+
+            fis = new FileInputStream(srcFile);
+            fos = new FileOutputStream(destFile);
+
+            //复制的过程
+            byte[] buffer = new byte[5];
+            int len;
+            while ((len = fis.read(buffer)) != -1) {
+                fos.write(buffer, 0, len);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+```
+
+------
+
+### 缓冲流（处理流一）
+
+- 内部提供了一个缓冲区，提高流的读取、写入的速度
+
+##### BufferedInputStream & BufferedOutputStream
+
+- 造文件
+- 造流(节点流、缓冲流)
+- 复制(读取、写入)
+- 资源关闭(关闭外层流，内层流自动省略)
+
+```java
+		/*
+    实现非文本文件的复制
+     */
+    @Test
+    public void BufferedStreamTest() throws FileNotFoundException {
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+
+        try {
+            //1.造文件
+            File srcFile = new File("爱情与友情.jpg");
+            File destFile = new File("爱情与友情3.jpg");
+            //2.造流
+            //2.1 造节点流
+            FileInputStream fis = new FileInputStream((srcFile));
+            FileOutputStream fos = new FileOutputStream(destFile);
+            //2.2 造缓冲流
+            bis = new BufferedInputStream(fis);
+            bos = new BufferedOutputStream(fos);
+
+            //3.复制的细节：读取、写入
+            byte[] buffer = new byte[10];
+            int len;
+            while((len = bis.read(buffer)) != -1){
+                bos.write(buffer,0,len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.资源关闭
+            //要求：先关闭外层的流，再关闭内层的流
+            if(bos != null){
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if(bis != null){
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            //说明：关闭外层流的同时，内层流也会自动的进行关闭。关于内层流的关闭，我们可以省略.
+//        fos.close();
+//        fis.close();
+        }
+    }
+```
+
+##### BufferedReader & BufferedWriter
+
+```java
+		// 使用BufferedReader和BufferedWriter实现文本文件的复制
+		@Test
+    public void testBufferedReaderBufferedWriter() {
+        BufferedReader br = null;
+        BufferedWriter bw = null;
+        try {
+            //创建文件和相应的流
+            br = new BufferedReader(new FileReader(new File("dbcp.txt")));
+            bw = new BufferedWriter(new FileWriter(new File("dbcp1.txt")));
+
+            //读写操作
+            //方式一：使用char[]数组
+//            char[] cbuf = new char[1024];
+//            int len;
+//            while((len = br.read(cbuf)) != -1){
+//                bw.write(cbuf,0,len);
+//    //            bw.flush();			// 清空缓存，缓存写入
+//            }
+
+            //方式二：使用String
+            String data;
+            while ((data = br.readLine()) != null) {
+                //方法一：
+//                bw.write(data + "\n");//data中不包含换行符
+                //方法二：
+                bw.write(data);//data中不包含换行符
+                bw.newLine();//提供换行的操作
+            }
+          
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //关闭资源
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+```
+
+------
+
+### 转换流（处理流二）
+
+- 提供字节流与字符流之间的转换
+- `InputStreamReader`：将一个字节的输入流转换为字符的输入流
+- `OutputStreamWriter`：将一个字符的输出流转换为字节的输出流
+
+<p>
+<img src=""/>
+</p>
