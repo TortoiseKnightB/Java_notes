@@ -1,0 +1,8 @@
+control + H：查看实现类
+control + alt + L：格式化代码
+control + O：快速生成方法
+alt + Enter：根据内容快速生成变量名
+alt + Insert：快速导入功能代码
+control + alt + t：快速插入 try/catch 等
+control + Shift + Alt + N：知道类名查找类
+Shift + Shift：全局搜索
