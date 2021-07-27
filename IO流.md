@@ -574,3 +574,281 @@
         dis.close();
     }
 ```
+
+------
+
+### 对象流（序列化/反序列化）
+
+- ObjectInputStream 和 ObjectOutputStream
+- 作用：用于存储和读取**基本数据类型数据**或**对象**的处理流。它的强大之处就是可以把 Java 中的对象写入到数据源中，也能把对象从数据源中还原回来
+- 要想一个java对象是可序列化的，需要满足相应的要求：
+  - 需要实现接口：Serializable
+  - 当前类提供一个全局常量：serialVersionUID
+  - 除了当前类需要实现 Serializable 接口之外，还必须保证其内部所有属性也必须是可序列化的（默认情况下，基本数据类型可序列化）
+- 补充：ObjectOutputStream 和 ObjectInputStream 不能序列化 static 和 transient 修饰的成员变量
+
+```java
+// 可序列化的对象类
+public class Person implements Serializable {
+
+    public static final long serialVersionUID = 475463534532L;
+
+    private String name;
+    private int age;
+    private int id;
+    private Account acct;
+
+    public Person(String name, int age, int id) {
+        this.name = name;
+        this.age = age;
+        this.id = id;
+    }
+
+    public Person(String name, int age, int id, Account acct) {
+        this.name = name;
+        this.age = age;
+        this.id = id;
+        this.acct = acct;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", id=" + id +
+                ", acct=" + acct +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Person(String name, int age) {
+
+        this.name = name;
+        this.age = age;
+    }
+
+    public Person() {
+
+    }
+}
+
+
+class Account implements Serializable {
+    public static final long serialVersionUID = 4754534532L;
+    private double balance;
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "balance=" + balance +
+                '}';
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public Account(double balance) {
+        this.balance = balance;
+    }
+}
+```
+
+```java
+		// 对象流的操作
+    /*
+    序列化过程：将内存中的java对象保存到磁盘中或通过网络传输出去
+    使用ObjectOutputStream实现
+     */
+    @Test
+    public void testObjectOutputStream() {
+        ObjectOutputStream oos = null;
+
+        try {
+            //1.
+            oos = new ObjectOutputStream(new FileOutputStream("object.dat"));
+            //2.
+            oos.writeObject(new String("我爱北京天安门"));
+            oos.flush();//刷新操作
+
+            oos.writeObject(new Person("王铭", 23));
+            oos.flush();
+
+            oos.writeObject(new Person("张学良", 23, 1001, new Account(5000)));
+            oos.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (oos != null) {
+                //3.
+                try {
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+    }
+
+    /*
+    反序列化：将磁盘文件中的对象还原为内存中的一个java对象
+    使用ObjectInputStream来实现
+     */
+    @Test
+    public void testObjectInputStream() {
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new FileInputStream("object.dat"));
+
+            Object obj = ois.readObject();
+            String str = (String) obj;
+
+            Person p = (Person) ois.readObject();
+            Person p1 = (Person) ois.readObject();
+
+            System.out.println(str);
+            System.out.println(p);
+            System.out.println(p1);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (ois != null) {
+                try {
+                    ois.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
+```
+
+------
+
+### 随机存取文件流
+
+- RandomAccessFile
+- RandomAccessFile 直接继承于 java.lang.Object 类，实现了 DataInput和DataOutput 接口
+- RandomAccessFile 既可以作为一个输入流，又可以作为一个输出流
+- 如果 RandomAccessFile 作为输出流时，写出到的文件如果不存在，则在执行过程中自动创建。
+- 如果写出到的文件存在，则会对原有文件内容进行覆盖。（默认情况下，从头覆盖）
+- 可以通过相关的操作，实现 RandomAccessFile **“插入”**数据的效果
+
+```java
+		// 基本读写
+    @Test
+    public void test1() {
+        RandomAccessFile raf1 = null;
+        RandomAccessFile raf2 = null;
+        try {
+            //1.
+            raf1 = new RandomAccessFile(new File("爱情与友情.jpg"),"r");
+            raf2 = new RandomAccessFile(new File("爱情与友情1.jpg"),"rw");
+            //2.
+            byte[] buffer = new byte[1024];
+            int len;
+            while((len = raf1.read(buffer)) != -1){
+                raf2.write(buffer,0,len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //3.
+            if(raf1 != null){
+                try {
+                    raf1.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if(raf2 != null){
+                try {
+                    raf2.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+		// 指定位置读写
+    @Test
+    public void test2() throws IOException {
+
+        RandomAccessFile raf1 = new RandomAccessFile("hello.txt","rw");
+
+        raf1.seek(3);//将指针调到角标为3的位置
+        raf1.write("xyz".getBytes());//
+
+        raf1.close();
+
+    }
+
+
+    /*
+    使用RandomAccessFile实现数据的插入效果
+     */
+    @Test
+    public void test3() throws IOException {
+
+        RandomAccessFile raf1 = new RandomAccessFile("hello.txt","rw");
+
+        raf1.seek(3);//将指针调到角标为3的位置
+        //保存指针3后面的所有数据到StringBuilder中
+        StringBuilder builder = new StringBuilder((int) new File("hello.txt").length());
+        byte[] buffer = new byte[20];
+        int len;
+        while((len = raf1.read(buffer)) != -1){
+            builder.append(new String(buffer,0,len)) ;
+        }
+        //调回指针，写入“xyz”
+        raf1.seek(3);
+        raf1.write("xyz".getBytes());
+
+        //将StringBuilder中的数据写入到文件中
+        raf1.write(builder.toString().getBytes());
+
+        raf1.close();
+
+        //思考：将StringBuilder替换为ByteArrayOutputStream
+    }
+```
+
+------
+
