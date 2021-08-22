@@ -6,3 +6,4 @@ alt + Insert：快速导入功能代码
 control + alt + t：快速插入 try/catch 等
 control + Shift + Alt + N：知道类名查找类
 Shift + Shift：全局搜索
+shift + shift => Files (选择 Project Files) => 随便输入一些不存在的搜索内容，点击下方 Find in Files：全文搜索文档内容

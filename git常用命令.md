@@ -90,3 +90,13 @@ target
 excludesfile = C:/Users/asus/git.ignore
 注意:这里要使用“正斜线(/)”，不要使用“反斜线(\)”
 ```
+
+------
+
+### Git 各命令详解
+
+- 参考文章：https://segmentfault.com/a/1190000006185954
+
+- 3 层指针：HEAD -> Branch -> Commit
+- **checkout**：将 HEAD 从当前分支移向其他分支（HEAD -> Branch2 -> Commit2）。此时 Branch 仍指向 Commit
+- **reset**：将 Branch 移向其他 Commit（HEAD -> Branch -> Commit2）。此时 Branch、Branch2 都指向 Commit2
