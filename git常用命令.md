@@ -1,5 +1,12 @@
 # Git 常用命令
 
+- 查看当前用户名和邮箱：
+- git config user.name
+- git config user.email
+
+
+
+- 修改用户名和邮箱：
 - git config --global user.name <用户名>
 - git config --global user.email <邮箱>
 
